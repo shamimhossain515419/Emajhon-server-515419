@@ -32,13 +32,18 @@ async function run() {
   // Send a ping to confirm a successful connection
 
   const ProductCollacion = client.db("EmajhonDB").collection("Producat");
+  // const indexKey = { name: 1 };
+  //   const indexOptions = { name: "name", };
+  //   const result = await ProductCollacion.createIndex(indexKey, indexOptions)
+    
+  
   app.get('/product', async (req, res) => {
-
-    const search = req.query.search;
-    const query = { name: { $regex: search, $options: 'i' } }
+  const search = req.query.search;
+    console.log(search);
+    const query =  {"name": {$regex: search, $options: 'i'}}
     const result = await ProductCollacion.find(query).toArray();
     res.send(result)
-    
+
   })
 
   app.get('/product/:text', async (req, res) => {
