@@ -3,15 +3,11 @@ const express = require('express');
 const cors = require('cors');
 const { MongoClient, ServerApiVersion } = require('mongodb');
 // Creating an instance of the Express application
-const port = process.env.PORT || 5000
+const port = 5000
 const app = express();
 require('dotenv').config();
 app.use(cors())
 app.use(express.json());
-
-
-// EmajhonDB
-// Producat
 
 
 const uri = "mongodb+srv://emajhon515419:qdUOf0k4YwwVRhAO@cluster0.jt15atw.mongodb.net/?retryWrites=true&w=majority";
@@ -27,21 +23,11 @@ const client = new MongoClient(uri, {
 
 async function run() {
 
-  // Connect the client to the server	(optional starting in v4.7)
-  // await client.connect();
-  // Send a ping to confirm a successful connection
 
   const ProductCollacion = client.db("EmajhonDB").collection("Producat");
-  // const indexKey = { name: 1 };
-  //   const indexOptions = { name: "name", };
-  //   const result = await ProductCollacion.createIndex(indexKey, indexOptions)
-    
-  
+
   app.get('/product', async (req, res) => {
-  const search = req.query.search;
-    console.log(search);
-    const query =  {"name": {$regex: search, $options: 'i'}}
-    const result = await ProductCollacion.find(query).toArray();
+  const result = await ProductCollacion.find().toArray();
     res.send(result)
 
   })
